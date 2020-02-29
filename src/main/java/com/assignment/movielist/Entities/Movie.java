@@ -1,21 +1,21 @@
 package com.assignment.movielist.Entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="movie")
 public class Movie {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-
-    //private List<String> cast;
 
     @Column(name = "name")
     private String name;
@@ -47,6 +47,30 @@ public class Movie {
     @Column(name = "box_off_collection")
     private Long boxOffCollection;
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "movies")
+    @JsonIgnoreProperties("movies")
+    private Set<Actor> actors = new HashSet<>();
+
+    public void addActor(Actor actor) {
+        actors.add(actor);
+    }
+
+    public void removeActor(Actor actor) {
+        actors.remove(actor);
+    }
+
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
 
     public Long getId() {
         return id;
