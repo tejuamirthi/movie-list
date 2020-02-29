@@ -18,4 +18,19 @@ public class MovieListServiceImplementation implements MovieListService {
     public List<Movie> getListMovies() {
         return movieRepository.findAll();
     }
+
+    @Override
+    public Movie createMovie(Movie movie) {
+        return null;
+    }
+
+    @Override
+    public Movie updateMovie(Movie movie) {
+        return null;
+    }
+
+    @Override
+    public Movie findMovieByName(String movieName) {
+        return movieRepository.findMovieByName(movieName);
+    }
 }
