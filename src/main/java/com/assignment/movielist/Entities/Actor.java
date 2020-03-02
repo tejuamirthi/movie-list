@@ -9,11 +9,7 @@ public class Actor {
     @Id
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "movie_cast",
             joinColumns = { @JoinColumn(name = "actor_id", referencedColumnName = "name") },
             inverseJoinColumns = { @JoinColumn(name = "movie_id", referencedColumnName = "id") })

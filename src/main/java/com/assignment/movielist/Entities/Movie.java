@@ -48,10 +48,6 @@ public class Movie {
     private Long boxOffCollection;
 
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            },
             mappedBy = "movies")
     @JsonIgnoreProperties("movies")
     private Set<Actor> actors = new HashSet<>();
