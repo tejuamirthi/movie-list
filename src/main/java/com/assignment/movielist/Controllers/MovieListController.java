@@ -43,6 +43,16 @@ public class MovieListController {
 //        return htmlResponse;
     }
 
+    @GetMapping(path = "clean-db")
+    public void deleteData() {
+        movieListService.deleteData();
+    }
+
+    @GetMapping(path = "clean-db")
+    public void scrapeMoviesAgain() {
+        movieListService.deleteData(); //implement scraping logic
+    }
+
     @GetMapping(path = "/get-list-db")
     public List<Movie> getMovieListFromDB() throws Throwable {
         return movieListService.getListMovies();

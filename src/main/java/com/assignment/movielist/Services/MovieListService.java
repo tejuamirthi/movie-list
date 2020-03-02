@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MovieListService {
     List<Movie> getListMovies();
+    void deleteData();
 }
