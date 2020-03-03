@@ -42,6 +42,7 @@ public class MovieListServiceImplementation implements MovieListService {
         movieRepository.deleteAll();
     }
 
+    @Transactional
     @Override
     public void scrapeData() throws UnsupportedEncodingException {
         assignMovieNames();
@@ -58,17 +59,33 @@ public class MovieListServiceImplementation implements MovieListService {
             Element table = htmlResponse.select("table").get(0);
             Elements rows = table.select("tr");
 
-            Element directedByEle = rows.get(2).select("td").get(0);
+            Movie movie = getMovieClass(rows, movieName);
 
 
-            directedByEle.getElementsByTag("a").get(0).text();
+            movieRepository.save(movie);
         }
     }
 
     private void assignMovieNames() {
         movieNames.clear();
         movieNames.add("The Matrix");
+        // add new Movie names
+    }
 
+    private Movie getMovieClass(Elements rows, String movieName) {
+        Movie movie = new Movie();
+        movie.setName(movieName);
+
+
+        Element directedByEle = rows.get(2).select("td").get(0);
+        String dirName = directedByEle.getElementsByTag("a").get(0).text();
+        movie.setDirectedBy(dirName);
+
+        Element producedByEle = rows.get(3).select("td").get(0);
+        String proName = directedByEle.getElementsByTag("a").get(0).text();
+        movie.setProducedBy(proName);
+
+        return movie;
     }
 
 }
