@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class MovieListController {
     private MovieListService movieListService;
 
     @GetMapping(path = "/get-list")
-    public List<Movie> getMovieList() throws Throwable {
+    public List<Movie> getMovieList() {
         return movieListService.getListMovies();
     }
 
@@ -33,12 +34,12 @@ public class MovieListController {
     }
 
     @GetMapping(path = "/scrape-db")
-    public void scrapeMoviesAgain() {
-        movieListService.deleteData(); //implement scraping logic
+    public void scrapeMoviesAgain() throws UnsupportedEncodingException {
+        movieListService.scrapeData(); //implement scraping logic
     }
 
     @GetMapping(path = "/get-list-db")
-    public List<Movie> getMovieListFromDB() throws Throwable {
+    public List<Movie> getMovieListFromDB() {
         return movieListService.getListMovies();
     }
 }
