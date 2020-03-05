@@ -82,8 +82,15 @@ public class MovieListServiceImplementation implements MovieListService {
         movie.setDirectedBy(dirName);
 
         Element producedByEle = rows.get(3).select("td").get(0);
-        String proName = directedByEle.getElementsByTag("a").get(0).text();
+        String proName = producedByEle.getElementsByTag("a").get(0).text();
         movie.setProducedBy(proName);
+
+        Element writtenByEle = rows.get(4).select("td").get(0);
+        String writerName = writtenByEle.getElementsByTag("a").get(0).text();
+        movie.setProducedBy(writerName);
+
+
+
 
         return movie;
     }
