@@ -11,4 +11,5 @@ public interface MovieListService {
     List<MovieModel> getListMovies();
     void deleteData();
     void scrapeData() throws UnsupportedEncodingException;
+    List<MovieModel> getMoviesByFilter(String title, Date releaseDate);
 }

@@ -19,7 +19,9 @@ import javax.transaction.Transactional;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieListServiceImplementation implements MovieListService {
@@ -103,5 +105,11 @@ public class MovieListServiceImplementation implements MovieListService {
 
         return movie;
     }
+
+    // TODO get movies based on sorting by title, release date
+    public List<MovieModel> getMoviesByFilter(String title, Date releaseDate) {
+        return null;
+    }
+
 
 }
