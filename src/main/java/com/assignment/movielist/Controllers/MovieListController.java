@@ -1,6 +1,7 @@
 package com.assignment.movielist.Controllers;
 
 import com.assignment.movielist.Entities.Movie;
+import com.assignment.movielist.Models.MovieModel;
 import com.assignment.movielist.Models.ResponseParse;
 import com.assignment.movielist.Services.MovieListService;
 import org.jsoup.Jsoup;
@@ -24,7 +25,7 @@ public class MovieListController {
     private MovieListService movieListService;
 
     @GetMapping(path = "/get-list")
-    public List<Movie> getMovieList() {
+    public List<MovieModel> getMovieList() {
         return movieListService.getListMovies();
     }
 
@@ -39,7 +40,7 @@ public class MovieListController {
     }
 
     @GetMapping(path = "/get-list-db")
-    public List<Movie> getMovieListFromDB() {
+    public List<MovieModel> getMovieListFromDB() {
         return movieListService.getListMovies();
     }
 }

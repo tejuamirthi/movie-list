@@ -1,12 +1,14 @@
 package com.assignment.movielist.Services;
 
 import com.assignment.movielist.Entities.Movie;
+import com.assignment.movielist.Models.MovieModel;
 import com.assignment.movielist.Models.ResponseParse;
 import com.assignment.movielist.Repositories.MovieRepository;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -32,8 +34,15 @@ public class MovieListServiceImplementation implements MovieListService {
     private List<String> movieNames = new ArrayList<>();
 
     @Override
-    public List<Movie> getListMovies() {
-        return movieRepository.findAll();
+    public List<MovieModel> getListMovies() {
+        List<Movie> movieList = movieRepository.findAll();
+        List<MovieModel> movieModelList = new ArrayList<>();
+        for(Movie movie: movieList) {
+            MovieModel movieModel = new MovieModel();
+            BeanUtils.copyProperties(movie, movieModel);
+            movieModelList.add(movieModel);
+        }
+        return movieModelList;
     }
 
     @Transactional
