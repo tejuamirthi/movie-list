@@ -107,9 +107,13 @@ public class MovieListServiceImplementation implements MovieListService {
     }
 
     // TODO get movies based on sorting by title, release date
-    public List<MovieModel> getMoviesByFilter(String title, Date releaseDate) {
+    public List<MovieModel> getMoviesByFilter(String title, Date releasedAfter, Date releasedBefore) {
         return null;
     }
 
+    // TODO dynamic query JPA
+    private List<Movie> getMovieEntityByFilter(String title, Date releasedAfter, Date releasedBefore) {
+        return null;
+    }
 
 }
