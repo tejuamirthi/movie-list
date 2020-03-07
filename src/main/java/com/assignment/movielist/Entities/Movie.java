@@ -1,5 +1,6 @@
 package com.assignment.movielist.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class Movie {
     @Column(name = "music_composer")
     private String musicComposer;
 
+    @JsonFormat(pattern="dd/MM/yyyy")
     @Column(name = "release_date")
     private Date releaseDate;
 

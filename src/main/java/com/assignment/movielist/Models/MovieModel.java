@@ -1,6 +1,7 @@
 package com.assignment.movielist.Models;
 
 import com.assignment.movielist.Entities.Actor;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.CascadeType;
@@ -23,6 +24,7 @@ public class MovieModel {
 
     private String musicComposer;
 
+    @JsonFormat(pattern="dd/MM/yyyy")
     private Date releaseDate;
 
     private Long duration;
