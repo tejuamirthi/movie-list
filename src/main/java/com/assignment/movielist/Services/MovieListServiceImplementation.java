@@ -108,7 +108,14 @@ public class MovieListServiceImplementation implements MovieListService {
 
     // TODO get movies based on sorting by title, release date
     public List<MovieModel> getMoviesByFilter(String title, Date releasedAfter, Date releasedBefore) {
-        return null;
+        List<Movie> movieList = movieRepository.getMoviesByFilter(title, releasedBefore, releasedAfter);
+        List<MovieModel> movieModelList = new ArrayList<>();
+        for(Movie movie: movieList) {
+            MovieModel movieModel = new MovieModel();
+            BeanUtils.copyProperties(movie,movieModel);
+            movieModelList.add(movieModel);
+        }
+        return movieModelList;
     }
 
     // TODO dynamic query JPA

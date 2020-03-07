@@ -10,9 +10,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.websocket.server.PathParam;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -43,4 +45,10 @@ public class MovieListController {
     public List<MovieModel> getMovieListFromDB() {
         return movieListService.getListMovies();
     }
+
+    @GetMapping(path = "/get-filter-list/{name}")
+    public List<MovieModel> getMoviesByFilter(@PathVariable("name") String name) {
+        return movieListService.getMoviesByFilter(name, null, null);
+    }
+
 }
