@@ -6,6 +6,7 @@ import com.assignment.movielist.Repositories.Custom.CustomMovieRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,10 +42,39 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
         Root<Movie> movie = query.from(Movie.class);
 
         Path<String> moviePath = movie.get("name");
+        Path<String> movieReleasedAfter = movie.get("releaseDate");
+        Path<String> movieReleasedBefore = movie.get("releaseDate");
+
+        List<Predicate> predicateList = new ArrayList<>();
+
+        if(name != null) {
+            Predicate titlePredicate = criteriaBuilder.like(moviePath,"%"+name+"%");
+            predicateList.add(titlePredicate);
+        }
+
+        if(releaseBefore != null) {
+            Predicate preRelBefore = criteriaBuilder.lessThan(movieReleasedBefore, releaseBefore.toString());
+            predicateList.add(preRelBefore);
+        }
+
+        if(releaseAfter != null) {
+            Predicate preRelAfter = criteriaBuilder.greaterThan(movieReleasedAfter, releaseAfter.toString());
+            predicateList.add(preRelAfter);
+        }
 
         query
                 .select(movie)
-                .where(criteriaBuilder.like(moviePath,"%"+name+"%"));
+                .where(predicateList.toArray(new Predicate[predicateList.size()]));
+
+//        query
+//                .select(movie)
+//                .where(criteriaBuilder.like(moviePath,"%"+name+"%"))
+//
+//        ;
+//
+//        query
+//                .select(movie)
+//                .where(criteriaBuilder.lessThan(movieReleasedBefore,releaseBefore.toString()));
 
         return entityManager.createQuery(query).getResultList();
     }
