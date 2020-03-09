@@ -6,9 +6,7 @@ import com.assignment.movielist.Repositories.Custom.CustomMovieRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 
@@ -66,15 +64,37 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
                 .select(movie)
                 .where(predicateList.toArray(new Predicate[predicateList.size()]));
 
-//        query
-//                .select(movie)
-//                .where(criteriaBuilder.like(moviePath,"%"+name+"%"))
-//
-//        ;
-//
-//        query
-//                .select(movie)
-//                .where(criteriaBuilder.lessThan(movieReleasedBefore,releaseBefore.toString()));
+
+        if(sortBy != null) {
+            Comparator<Movie> comparator = new Comparator<Movie>() {
+                @Override
+                public int compare(Movie o1, Movie o2) {
+                    if (sortBy.equals(name))
+                        return o1.getName().compareTo(o2.getName());
+                    else
+                        return o1.getReleaseDate().compareTo(o2.getReleaseDate());
+                }
+            };
+            List<Movie> results = entityManager.createQuery(query).getResultList();
+            if (!desc)
+                Collections.sort(results,comparator);
+            else
+                Collections.sort(results,comparator.reversed());
+            return results;
+
+            // Use orderBy database criteria to make query
+            /*
+            if(sortBy.equals(name))
+                query.orderBy(criteriaBuilder.asc(movie.get("name")));
+            else
+                query.orderBy(criteriaBuilder.asc(movie.get("releaseDate")));
+            } else if(sortBy != null) {
+                if(sortBy.equals(name))
+                    query.orderBy(criteriaBuilder.desc(movie.get("name")));
+                else
+                    query.orderBy(criteriaBuilder.desc(movie.get("releaseDate")));
+            */
+        }
 
         return entityManager.createQuery(query).getResultList();
     }
