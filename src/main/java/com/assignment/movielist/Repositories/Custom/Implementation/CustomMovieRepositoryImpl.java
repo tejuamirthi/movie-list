@@ -17,7 +17,7 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 
     // TODO complete the dynamic query
     @Override
-    public List<Movie> getMoviesByFilter(String name, Date releaseBefore, Date releaseAfter) {
+    public <T> List<Movie> getMoviesByFilter(String name, Date releaseBefore, Date releaseAfter, T sortBy, boolean desc) {
 //        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 //        CriteriaQuery<User> query = cb.createQuery(User.class);
 //        Root<User> user = query.from(User.class);
