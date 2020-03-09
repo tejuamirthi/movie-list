@@ -53,8 +53,10 @@ public class MovieListController {
     @GetMapping(path = "/get-filter-list")
     public List<MovieModel> getMoviesByFilter(@RequestParam(value = "title", required = false) String name,
                                               @RequestParam(value = "released-before", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date releasedBefore,
-                                              @RequestParam(value = "released-after", required = false) Date releasedAfter) {
-        return movieListService.getMoviesByFilter(name, releasedAfter, releasedBefore);
+                                              @RequestParam(value = "released-after", required = false) Date releasedAfter,
+                                              @RequestParam(value = "sort-by", required = false) String orderBy,
+                                              @RequestParam(value = "desc", required = false) boolean desc) {
+        return movieListService.getMoviesByFilter(name, releasedAfter, releasedBefore,orderBy, desc);
     }
 
 }
