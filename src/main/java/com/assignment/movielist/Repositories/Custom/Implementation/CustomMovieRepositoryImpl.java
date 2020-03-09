@@ -42,8 +42,8 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
         Root<Movie> movie = query.from(Movie.class);
 
         Path<String> moviePath = movie.get("name");
-        Path<String> movieReleasedAfter = movie.get("releaseDate");
-        Path<String> movieReleasedBefore = movie.get("releaseDate");
+        Path<Date> movieReleasedAfter = movie.get("releaseDate");
+        Path<Date> movieReleasedBefore = movie.get("releaseDate");
 
         List<Predicate> predicateList = new ArrayList<>();
 
@@ -53,12 +53,12 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
         }
 
         if(releaseBefore != null) {
-            Predicate preRelBefore = criteriaBuilder.lessThan(movieReleasedBefore, releaseBefore.toString());
+            Predicate preRelBefore = criteriaBuilder.lessThan(movieReleasedBefore, releaseBefore);
             predicateList.add(preRelBefore);
         }
 
         if(releaseAfter != null) {
-            Predicate preRelAfter = criteriaBuilder.greaterThan(movieReleasedAfter, releaseAfter.toString());
+            Predicate preRelAfter = criteriaBuilder.greaterThan(movieReleasedAfter, releaseAfter);
             predicateList.add(preRelAfter);
         }
 
