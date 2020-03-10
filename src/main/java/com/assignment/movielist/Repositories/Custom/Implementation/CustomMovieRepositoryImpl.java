@@ -69,6 +69,11 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
             Comparator<Movie> comparator = new Comparator<Movie>() {
                 @Override
                 public int compare(Movie o1, Movie o2) {
+                    if(o1.getReleaseDate() == null )
+                        return 1;
+                    else if (o2.getReleaseDate() == null)
+                        return -1;
+
                     if (sortBy.equals(name))
                         return o1.getName().compareTo(o2.getName());
                     else
