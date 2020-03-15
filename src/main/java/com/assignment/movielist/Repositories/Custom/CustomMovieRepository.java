@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface CustomMovieRepository {
 
-    <T> List<Movie> getMoviesByFilter(String name, Date releaseBefore, Date releaseAfter, T sortBy, boolean desc);
+    List<Movie> getMoviesByFilter(String name, Date releaseBefore, Date releaseAfter, String sortBy, boolean desc);
 
 }

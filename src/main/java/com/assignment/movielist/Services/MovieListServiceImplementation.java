@@ -111,13 +111,8 @@ public class MovieListServiceImplementation implements MovieListService {
 
         List<Movie> movieList = new ArrayList<>();
 
-        if(orderBy == null)
-            movieList = movieRepository.getMoviesByFilter(title, releasedBefore, releasedAfter, null, desc);
-        else if (orderBy.equals("title")) {
-            movieList = movieRepository.getMoviesByFilter(title, releasedBefore, releasedAfter, title, desc);
-        } else if(orderBy.equals("release-date")) {
-            movieList = movieRepository.getMoviesByFilter(title, releasedBefore, releasedAfter, releasedAfter, desc);
-        }
+        movieList = movieRepository.getMoviesByFilter(title, releasedBefore, releasedAfter, orderBy, desc);
+
         List<MovieModel> movieModelList = new ArrayList<>();
         for(Movie movie: movieList) {
             MovieModel movieModel = new MovieModel();

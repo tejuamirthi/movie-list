@@ -15,7 +15,7 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
 
     // TODO complete the dynamic query
     @Override
-    public <T> List<Movie> getMoviesByFilter(String name, Date releaseBefore, Date releaseAfter, T sortBy, boolean desc) {
+    public List<Movie> getMoviesByFilter(String name, Date releaseBefore, Date releaseAfter, String sortBy, boolean desc) {
 //        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 //        CriteriaQuery<User> query = cb.createQuery(User.class);
 //        Root<User> user = query.from(User.class);
@@ -69,15 +69,17 @@ public class CustomMovieRepositoryImpl implements CustomMovieRepository {
             Comparator<Movie> comparator = new Comparator<Movie>() {
                 @Override
                 public int compare(Movie o1, Movie o2) {
-                    if(o1.getReleaseDate() == null )
-                        return 1;
-                    else if (o2.getReleaseDate() == null)
-                        return -1;
 
-                    if (sortBy.equals(name))
+
+                    if ("title".equals(sortBy))
                         return o1.getName().compareTo(o2.getName());
-                    else
+                    else {
+                        if(o1.getReleaseDate() == null )
+                            return -1;
+                        else if (o2.getReleaseDate() == null)
+                            return 1;
                         return o1.getReleaseDate().compareTo(o2.getReleaseDate());
+                    }
                 }
             };
             List<Movie> results = entityManager.createQuery(query).getResultList();
