@@ -1,10 +1,13 @@
 package com.assignment.movielist.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "actor")
 public class Actor {
     @Id
     private String name;
@@ -13,6 +16,7 @@ public class Actor {
     @JoinTable(name = "movie_cast",
             joinColumns = { @JoinColumn(name = "actor_id", referencedColumnName = "name") },
             inverseJoinColumns = { @JoinColumn(name = "movie_id", referencedColumnName = "id") })
+    @JsonIgnoreProperties("actors")
     private Set<Movie> movies = new HashSet<Movie>();
 
     public void addMovie(Movie movie) {
