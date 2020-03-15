@@ -6,9 +6,7 @@ import com.assignment.movielist.Models.MovieModel;
 import com.assignment.movielist.Services.actor.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
@@ -29,4 +27,29 @@ public class ActorController {
         return actorService.getActor(name).getMovies();
     }
 
+    @PostMapping(path = "/actor", consumes = "application/json")
+    public String createActor(@RequestBody ActorModel actorModel){
+        String result = "";
+        try {
+            actorService.createActor(actorModel);
+            result = "Successfully Created a actor";
+        } catch (Exception e) {
+            result = "Failed to create the actor";
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @DeleteMapping(path = "/actor", consumes = "application/json")
+    public String deleteActor(@RequestBody ActorModel actorModel){
+        String result = "";
+        try {
+            actorService.deleteActor(actorModel);
+            result = "Successfully deleted a actor";
+        } catch (Exception e) {
+            result = "Failed to delete the actor";
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
