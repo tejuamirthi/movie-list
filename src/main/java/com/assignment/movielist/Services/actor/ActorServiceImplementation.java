@@ -34,7 +34,7 @@ public class ActorServiceImplementation implements ActorService {
 
     @Transactional
     @Override
-    public void deleteActor(String name) {
-        actorRepository.deleteById(name);
+    public void deleteActor(ActorModel actorModel) {
+        actorRepository.deleteById(actorModel.getName());
     }
 }
