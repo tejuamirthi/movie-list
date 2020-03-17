@@ -49,7 +49,7 @@ public class MovieListController {
         return movieListService.getListMovies();
     }
 
-    // TODO - change format for date
+    // working date patter dd/mm/yyyy
     @GetMapping(path = "/get-filter-list")
     public List<MovieModel> getMoviesByFilter(@RequestParam(value = "title", required = false) String name,
                                               @RequestParam(value = "released-before", required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") Date releasedBefore,
