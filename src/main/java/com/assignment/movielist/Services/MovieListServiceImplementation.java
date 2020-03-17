@@ -105,10 +105,10 @@ public class MovieListServiceImplementation implements MovieListService {
 
         return movie;
     }
-    
+
     public List<MovieModel> getMoviesByFilter(String title, Date releasedAfter, Date releasedBefore, String orderBy, boolean desc) {
 
-        List<Movie> movieList = new ArrayList<>();
+        List<Movie> movieList;
 
         movieList = movieRepository.getMoviesByFilter(title, releasedBefore, releasedAfter, orderBy, desc);
 
