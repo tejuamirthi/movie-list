@@ -105,8 +105,7 @@ public class MovieListServiceImplementation implements MovieListService {
 
         return movie;
     }
-
-    // TODO get movies based on sorting by title, release date
+    
     public List<MovieModel> getMoviesByFilter(String title, Date releasedAfter, Date releasedBefore, String orderBy, boolean desc) {
 
         List<Movie> movieList = new ArrayList<>();
