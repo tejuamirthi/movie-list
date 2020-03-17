@@ -29,27 +29,27 @@ public class ActorController {
 
     @PostMapping(path = "/actor", consumes = "application/json")
     public String createActor(@RequestBody ActorModel actorModel){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         try {
             actorService.createActor(actorModel);
-            result = "Successfully Created a actor";
+            result.append("Successfully Created a actor");
         } catch (Exception e) {
-            result = "Failed to create the actor";
+            result.append("Failed to create the actor");
             e.printStackTrace();
         }
-        return result;
+        return result.toString();
     }
 
     @DeleteMapping(path = "/actor", consumes = "application/json")
     public String deleteActor(@RequestBody ActorModel actorModel){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         try {
             actorService.deleteActor(actorModel);
-            result = "Successfully deleted a actor";
+            result.append("Successfully deleted a actor");
         } catch (Exception e) {
-            result = "Failed to delete the actor";
+            result.append("Failed to delete the actor");
             e.printStackTrace();
         }
-        return result;
+        return result.toString();
     }
 }
