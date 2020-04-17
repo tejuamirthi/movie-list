@@ -2,38 +2,52 @@ package com.assignment.movielist.controllersTests;
 
 import com.assignment.movielist.Entities.Movie;
 import com.assignment.movielist.Models.MovieModel;
+import com.assignment.movielist.Repositories.MovieRepository;
 import com.assignment.movielist.Services.MovieListService;
+import com.assignment.movielist.Services.MovieListServiceImplementation;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-@RunWith(SpringRunner.class)
-@DataJpaTest
-@ContextConfiguration(locations = "classpath*:/spring/applicationContext*.xml")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class MovieListTests {
-    @Autowired
-    private TestEntityManager entityManager;
+    @Mock
+    private MovieRepository movieRepository;
 
-    @Autowired
-    private MovieListService movieListService;
+    @InjectMocks
+    private MovieListService movieListService = new MovieListServiceImplementation();
 
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void whenAllList_ReturnAll() {
-        Movie movie = new Movie();
-        movie.setName("NewTestUser");
-        entityManager.persist(movie);
-        entityManager.flush();
+        returnFindAllMovieRepository();
+        List<MovieModel> movieList = movieListService.getListMovies();
+        Mockito.verify(movieRepository).findAll();
+        Assert.assertEquals("Test movielist Size should be 1 ", 1, movieList.size());
+    }
 
-        List<MovieModel> list = movieListService.getMoviesByFilter("NewTestUser",null, null,null, false);
-        assertThat(list.size()).isEqualTo(1);
+    private void returnFindAllMovieRepository() {
+        Movie movie = new Movie();
+        movie.setName("Test Movie");
+        ArrayList<Movie> list = new ArrayList<>();
+        list.add(movie);
+        Mockito.when(movieRepository.findAll()).thenReturn(list);
     }
 }
