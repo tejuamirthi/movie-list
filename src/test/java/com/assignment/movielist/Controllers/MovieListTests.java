@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -23,10 +24,8 @@ import java.util.List;
 @SpringBootTest
 public class MovieListTests {
     @Mock
-    private MovieRepository movieRepository;
-
-    @InjectMocks
-    private MovieListService movieListService = new MovieListServiceImplementation();
+    @Autowired
+    private MovieListService movieListService;
 
     @Before
     public void init() {
@@ -37,15 +36,15 @@ public class MovieListTests {
     public void whenAllList_ReturnAll() {
         returnFindAllMovieRepository();
         List<MovieModel> movieList = movieListService.getListMovies();
-        Mockito.verify(movieRepository).findAll();
-        Assert.assertEquals("Test movielist Size should be 1 ", 1, movieList.size());
+        Mockito.verify(movieListService).getListMovies();
+        Assert.assertEquals("Test movie list Size should be 1 ", 1, movieList.size());
     }
 
     private void returnFindAllMovieRepository() {
-        Movie movie = new Movie();
+        MovieModel movie = new MovieModel();
         movie.setName("Test Movie");
-        ArrayList<Movie> list = new ArrayList<>();
+        List<MovieModel> list = new ArrayList<>();
         list.add(movie);
-        Mockito.when(movieRepository.findAll()).thenReturn(list);
+        Mockito.when(movieListService.getListMovies()).thenReturn(list);
     }
 }
