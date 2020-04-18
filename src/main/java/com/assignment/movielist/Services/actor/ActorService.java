@@ -5,6 +5,6 @@ import com.assignment.movielist.Models.ActorModel;
 
 public interface ActorService {
     ActorModel getActor(String name);
-    void createActor(ActorModel actorModel);
-    void deleteActor(ActorModel actorModel);
+    ActorModel createActor(ActorModel actorModel);
+    ActorModel deleteActor(ActorModel actorModel);
 }

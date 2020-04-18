@@ -26,15 +26,17 @@ public class ActorServiceImplementation implements ActorService {
 
     @Transactional
     @Override
-    public void createActor(ActorModel actorModel) {
+    public ActorModel createActor(ActorModel actorModel) {
         Actor actor = new Actor();
         BeanUtils.copyProperties(actorModel,actor);
         actorRepository.save(actor);
+        return actorModel;
     }
 
     @Transactional
     @Override
-    public void deleteActor(ActorModel actorModel) {
+    public ActorModel deleteActor(ActorModel actorModel) {
         actorRepository.deleteById(actorModel.getName());
+        return actorModel;
     }
 }
