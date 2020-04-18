@@ -27,6 +27,9 @@ public class MovieListTests {
     @Autowired
     private MovieListService movieListService;
 
+    @InjectMocks
+    private MovieListController movieListController;
+
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
@@ -35,7 +38,7 @@ public class MovieListTests {
     @Test
     public void whenAllList_ReturnAll() {
         returnFindAllMovieRepository();
-        List<MovieModel> movieList = movieListService.getListMovies();
+        List<MovieModel> movieList = movieListController.getMovieList();
         Mockito.verify(movieListService).getListMovies();
         Assert.assertEquals("Test movie list Size should be 1 ", 1, movieList.size());
     }
