@@ -19,6 +19,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 
@@ -56,6 +57,18 @@ public class ActorServiceTests {
         actorModel.setName(actorName);
         actorService.deleteActor(actorModel);
         verify(actorRepository, times(1)).deleteById(actorName);
+    }
+
+    @Test
+    public void testCreateActor() {
+        String actorName = "Test Actor";
+        Actor actor = new Actor();
+        actor.setName(actorName);
+        when(actorRepository.save(isA(Actor.class))).thenReturn(actor);
+        ActorModel actorModel = new ActorModel();
+        actorModel.setName(actorName);
+        ActorModel resActorModel = actorService.createActor(actorModel);
+        assertEquals(actorModel, resActorModel);
     }
 
     private void setUpStubForActorRepositoryGetByName(String testName) {
