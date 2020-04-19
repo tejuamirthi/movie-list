@@ -2,6 +2,7 @@ package com.assignment.movielist.Services;
 
 import com.assignment.movielist.Entities.Actor;
 import com.assignment.movielist.Entities.Movie;
+import com.assignment.movielist.Exceptions.ActorNotFound;
 import com.assignment.movielist.Models.ActorModel;
 import com.assignment.movielist.Repositories.ActorRepository;
 import com.assignment.movielist.Services.actor.ActorService;
@@ -39,7 +40,7 @@ public class ActorServiceTests {
     }
 
     @Test
-    public void testGetActorMethod() {
+    public void testGetActorMethod() throws ActorNotFound {
         String testActorName = "AA MB";
         setUpStubForActorRepositoryGetByName(testActorName);
         ActorModel actor = actorService.getActor(testActorName);
@@ -47,8 +48,13 @@ public class ActorServiceTests {
         assertEquals("Name Should be equal to "+testActorName, testActorName, actor.getName());
     }
 
+    @Test(expected = ActorNotFound.class)
+    public void testGetActorNotFound() throws ActorNotFound{
+        ActorModel actor = actorService.getActor("Test Actor");
+    }
+
     @Test
-    public void testDeleteActor() {
+    public void testDeleteActor() throws ActorNotFound {
         String actorName = "Test Actor";
         Actor actor = new Actor();
         actor.setName(actorName);
