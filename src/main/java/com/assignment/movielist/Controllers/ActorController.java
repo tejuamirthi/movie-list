@@ -1,5 +1,6 @@
 package com.assignment.movielist.Controllers;
 
+import com.assignment.movielist.Exceptions.ActorNotFound;
 import com.assignment.movielist.Models.ActorModel;
 import com.assignment.movielist.Models.MovieModel;
 import com.assignment.movielist.Services.actor.ActorService;
@@ -15,12 +16,12 @@ public class ActorController {
     private ActorService actorService;
 
     @GetMapping(path = "/actor")
-    public ActorModel getActor(@RequestParam(name = "name") String name) {
+    public ActorModel getActor(@RequestParam(name = "name") String name) throws ActorNotFound {
         return actorService.getActor(name);
     }
 
     @GetMapping(path = "/actor-movies")
-    public Set<MovieModel> getMoviesByActor(@RequestParam(name = "name") String name) {
+    public Set<MovieModel> getMoviesByActor(@RequestParam(name = "name") String name) throws ActorNotFound {
         return actorService.getActor(name).getMovies();
     }
 
@@ -35,7 +36,7 @@ public class ActorController {
     }
 
     @DeleteMapping(path = "/actor", consumes = "application/json")
-    public ActorModel deleteActor(@RequestBody ActorModel actorModel){
+    public ActorModel deleteActor(@RequestBody ActorModel actorModel) throws ActorNotFound {
         try {
             return actorService.deleteActor(actorModel);
         } catch (Exception e) {
