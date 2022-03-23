@@ -1,14 +1,12 @@
 package com.assignment.movielist.Controllers;
 
-import com.assignment.movielist.Entities.Movie;
+import com.assignment.movielist.Exceptions.ActorNotFound;
 import com.assignment.movielist.Models.ActorModel;
 import com.assignment.movielist.Models.MovieModel;
 import com.assignment.movielist.Services.actor.ActorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -18,38 +16,32 @@ public class ActorController {
     private ActorService actorService;
 
     @GetMapping(path = "/actor")
-    public ActorModel getActor(@RequestParam(name = "name") String name) {
+    public ActorModel getActor(@RequestParam(name = "name") String name) throws ActorNotFound {
         return actorService.getActor(name);
     }
 
     @GetMapping(path = "/actor-movies")
-    public Set<MovieModel> getMoviesByActor(@RequestParam(name = "name") String name) {
+    public Set<MovieModel> getMoviesByActor(@RequestParam(name = "name") String name) throws ActorNotFound {
         return actorService.getActor(name).getMovies();
     }
 
     @PostMapping(path = "/actor", consumes = "application/json")
-    public String createActor(@RequestBody ActorModel actorModel){
-        String result = "";
+    public ActorModel createActor(@RequestBody ActorModel actorModel){
         try {
-            actorService.createActor(actorModel);
-            result = "Successfully Created a actor";
+            return actorService.createActor(actorModel);
         } catch (Exception e) {
-            result = "Failed to create the actor";
             e.printStackTrace();
+            return null;
         }
-        return result;
     }
 
     @DeleteMapping(path = "/actor", consumes = "application/json")
-    public String deleteActor(@RequestBody ActorModel actorModel){
-        String result = "";
+    public ActorModel deleteActor(@RequestBody ActorModel actorModel) throws ActorNotFound {
         try {
-            actorService.deleteActor(actorModel);
-            result = "Successfully deleted a actor";
+            return actorService.deleteActor(actorModel);
         } catch (Exception e) {
-            result = "Failed to delete the actor";
             e.printStackTrace();
+            return null;
         }
-        return result;
     }
 }
