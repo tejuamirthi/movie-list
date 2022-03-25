@@ -1,4 +1,4 @@
-package com.assignment.movielist.Model;
+package com.assignment.movielist.Models;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 
